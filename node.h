@@ -7,7 +7,7 @@ class Node {
 private:
     uint64 id;
     double lat, lon;
-    int cluster_no;
+    int cluster_no {-1};
 public:
     uint64 get_id();
     void set_id(uint64);

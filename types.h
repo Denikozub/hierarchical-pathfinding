@@ -1,6 +1,6 @@
 #ifndef HIERARCHICAL_PATHFINDING_TYPES_H
 #define HIERARCHICAL_PATHFINDING_TYPES_H
 
-#typedef uint64 unsigned long long
+typedef unsigned long long uint64;
 
 #endif //HIERARCHICAL_PATHFINDING_TYPES_H

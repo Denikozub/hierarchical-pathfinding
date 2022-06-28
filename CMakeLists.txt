@@ -7,3 +7,5 @@ include_directories(.)
 
 add_executable(hierarchical_pathfinding
         node.h types.h)
+
+set_target_properties(hierarchical_pathfinding PROPERTIES LINKER_LANGUAGE CXX)
