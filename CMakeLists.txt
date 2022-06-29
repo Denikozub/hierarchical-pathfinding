@@ -3,9 +3,9 @@ project(hierarchical_pathfinding CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(.)
+
 
 add_executable(hierarchical_pathfinding
-        node.h types.h)
+        node.h types.h cluster.h edge.h path.h graph.h)
 
 set_target_properties(hierarchical_pathfinding PROPERTIES LINKER_LANGUAGE CXX)
