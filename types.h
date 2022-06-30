@@ -6,7 +6,7 @@
 #include <cstdint>
 #include "path.h"
 
-typedef std::unordered_set<std::pair<uint64_t, Path>> adj_nodes;
+typedef std::unordered_set<std::pair<uint64_t, Path>, PathHash> adj_nodes;
 typedef std::unordered_map<uint64_t, adj_nodes> adj_list;
 
 #endif //HIERARCHICAL_PATHFINDING_TYPES_H
