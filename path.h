@@ -21,6 +21,11 @@ public:
     void add(const Path&);
     void to_gpx(std::string) const;
     [[nodiscard]] double get_weight() const;
+    std::vector<uint64_t> get_path() const;
+};
+
+class PathHash {
+    size_t operator()(const Path &p) const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_PATH_H
