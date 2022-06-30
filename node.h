@@ -1,6 +1,12 @@
 #ifndef HIERARCHICAL_PATHFINDING_NODE_H
 #define HIERARCHICAL_PATHFINDING_NODE_H
 
+#include <unordered_map>
+#include "types.h"
+
+class Node;
+typedef std::unordered_map<uint64, Node> node_map;
+
 class Node {
 private:
     double lat, lon;
@@ -8,8 +14,7 @@ private:
     bool is_outer_ {false};
 public:
     Node(double, double);
-    Node(const Node &);
-    Node(Node&&);
+    Node(double&&, double&&);
     double get_lat();
     void set_lat(double);
     double get_lon();

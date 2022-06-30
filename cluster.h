@@ -3,12 +3,9 @@
 
 #include "types.h"
 #include "path.h"
-#include "graph.h"
 
 class Cluster {
-public: Cluster(const Graph&);
-public: Cluster(const Cluster&);
-public: Cluster(Cluster&&);
+public: Cluster(const node_map&, const adj_list&);
 public: void compute();
 public: id_set get_outer();
 public: double get_outer_dist(uint64, uint64);
