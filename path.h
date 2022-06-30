@@ -6,6 +6,10 @@
 #include <cstdint>
 #include "node.h"
 
+/*
+ * Needs node_map* for GPX output;
+ */
+
 class Path {
 private:
     const node_map* nodes = nullptr;

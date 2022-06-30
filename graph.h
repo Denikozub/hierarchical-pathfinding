@@ -5,10 +5,15 @@
 #include "types.h"
 #include "cluster.h"
 
+/*
+ * Constructors initialize nodes and node_neighbours_map;
+ * Graph::clusterize() initializes clusters and updates Node::cluster_no;
+ */
+
 class Graph {
 private:
     node_map nodes;
-    adj_list node_neighbours;
+    adj_list node_neighbours_map;
     cluster_map clusters {};
 public:
     // Graph(...);
