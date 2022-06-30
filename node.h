@@ -2,10 +2,10 @@
 #define HIERARCHICAL_PATHFINDING_NODE_H
 
 #include <unordered_map>
-#include "types.h"
+#include <cstdint>
 
 class Node;
-typedef std::unordered_map<uint64, Node> node_map;
+typedef std::unordered_map<uint64_t, Node> node_map;
 
 class Node {
 private:

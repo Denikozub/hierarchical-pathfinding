@@ -2,7 +2,7 @@
 
 Path::Path(const node_map* nodes) : nodes(nodes) {}
 
-void Path::add(uint64 new_node, double new_weight) {
+void Path::add(uint64_t new_node, double new_weight) {
     path.insert(path.end(), new_node);
     weight += new_weight;
 }
