@@ -1,18 +1,29 @@
 #ifndef HIERARCHICAL_PATHFINDING_CLUSTER_H
 #define HIERARCHICAL_PATHFINDING_CLUSTER_H
 
+#include <cstdint>
+#include <unordered_set>
 #include "types.h"
-#include "path.h"
-#include "graph.h"
+
+class Cluster;
+typedef std::unordered_map<uint64_t, Cluster> cluster_map;
+
+/*
+ * ONLY requires node_map* to update Node::is_outer_;
+ * Outer check: has incident nodes NOT from cluster;
+ * Cluster::compute() precomputes outer_neighbours_map and updates Node::is_outer_;
+ */
 
 class Cluster {
-public: Cluster(const Graph&);
-public: Cluster(const Cluster&);
-public: Cluster(Cluster&&);
-public: void compute();
-public: id_set get_outer();
-public: double get_outer_dist(uint64, uint64);
-public: Path get_outer_path(uint64, uint64);
+private:
+    node_map* nodes = nullptr;
+    const adj_list* node_neighbours_map = nullptr;
+    const std::unordered_set<uint64_t> cluster_nodes {};
+    adj_list outer_neighbours_map {};
+public:
+    Cluster(node_map*, const adj_list*, std::unordered_set<uint64_t>&&);
+    void compute();
+    const adj_nodes* get_outer_neighbours(uint64_t) const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_CLUSTER_H
