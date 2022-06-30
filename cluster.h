@@ -18,8 +18,8 @@ class Cluster {
 private:
     node_map* nodes = nullptr;
     const adj_list* node_neighbours_map = nullptr;
-    adj_list outer_neighbours_map {};
     const std::unordered_set<uint64_t> cluster_nodes {};
+    adj_list outer_neighbours_map {};
 public:
     Cluster(node_map*, const adj_list*, std::unordered_set<uint64_t>&&);
     void compute();
