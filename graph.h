@@ -4,12 +4,8 @@
 #include "types.h"
 
 class Graph {
-// public: Graph(...);
-public: Graph(const Graph&);
-public: Graph(Graph&&);
-public: void clusterize();
-public: id_set get_neighbours(uint64);
-public: double get_weight(uint64, uint64);
+public: virtual id_set get_neighbours(uint64) = 0;
+public: virtual double get_weight(uint64, uint64) = 0;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_GRAPH_H

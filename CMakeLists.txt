@@ -6,6 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 
 add_executable(hierarchical_pathfinding
-        node.h types.h cluster.h edge.h path.h graph.h)
+        node.h types.h cluster.h path.h graph.h unclustered_graph.h clustered_graph.h)
 
 set_target_properties(hierarchical_pathfinding PROPERTIES LINKER_LANGUAGE CXX)
