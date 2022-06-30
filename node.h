@@ -15,15 +15,15 @@ private:
 public:
     Node(double, double);
     Node(double&&, double&&);
-    double get_lat();
+    [[nodiscard]] double get_lat() const;
     void set_lat(double);
-    double get_lon();
+    [[nodiscard]] double get_lon() const;
     void set_lon(double);
-    int get_cluster_no();
+    [[nodiscard]] int get_cluster_no() const;
     void set_cluster_no(int);
-    bool has_cluster();
+    [[nodiscard]] bool has_cluster() const;
     void set_outer(bool);
-    bool is_outer();
+    [[nodiscard]] bool is_outer() const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_NODE_H

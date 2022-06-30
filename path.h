@@ -14,7 +14,7 @@ public: explicit Path(const node_map*);
 public: void add(uint64, double);
 public: void add(const Path&);
 public: void to_gpx(std::string) const;
-public: double get_weight() const;
+public: [[nodiscard]] double get_weight() const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_PATH_H
