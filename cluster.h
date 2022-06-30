@@ -3,9 +3,10 @@
 
 #include "types.h"
 #include "path.h"
+#include "graph.h"
 
 class Cluster {
-public: Cluster(const node_map&, const edge_set&, const adj_list&);
+public: Cluster(const Graph&);
 public: Cluster(const Cluster&);
 public: Cluster(Cluster&&);
 public: void compute();
