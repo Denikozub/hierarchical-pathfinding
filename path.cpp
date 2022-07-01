@@ -16,6 +16,10 @@ double Path::get_weight() const {
     return weight;
 }
 
+bool Path::empty() const {
+    return path.empty();
+}
+
 size_t PathHash::operator()(const Path &p) const {
     return std::hash<double>()(p.weight) ^ (*p.path.begin() * *p.path.end());
 }

@@ -11,8 +11,7 @@ typedef std::unordered_set<std::pair<uint64_t, Path>, PairHash> adj_nodes;
 typedef std::unordered_map<uint64_t, adj_nodes> adj_list;
 
 class PairHash {
-public:
-    size_t operator()(const std::pair<uint64_t, Path> &p) const {
+public: size_t operator()(const std::pair<uint64_t, Path> &p) const {
         return p.first + PathHash()(p.second);
     }
 };
