@@ -15,16 +15,17 @@ private:
     const node_map* nodes = nullptr;
     std::vector<uint64_t> path {};
     double weight {0};
+    friend class PathHash;
 public:
     explicit Path(const node_map*);
     void add(uint64_t, double);
     void add(const Path&);
     void to_gpx(std::string) const;
     [[nodiscard]] double get_weight() const;
-    std::vector<uint64_t> get_path() const;
 };
 
 class PathHash {
+public:
     size_t operator()(const Path &p) const;
 };
 
