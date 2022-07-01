@@ -21,7 +21,7 @@ public:
     void add(uint64_t, double);
     void add(const Path&);
     void to_gpx(std::string) const;
-    [[nodiscard]] double get_weight() const;
+    double get_weight() const;
 };
 
 class PathHash {
