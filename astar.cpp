@@ -50,5 +50,6 @@ Path find_path_astar(uint64_t start, uint64_t goal, const node_map& nodes,
         }
     }
 
-    Path path(&nodes);
+    Path path;
+    path.add(start, 0);
 }

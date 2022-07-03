@@ -12,16 +12,13 @@
 
 class Path {
 private:
-    const node_map* nodes = nullptr;
     std::vector<uint64_t> path {};
     double weight {0};
     friend class PathHash;
 public:
-    Path() = default;
-    explicit Path(const node_map*);
     void add(uint64_t, double);
     void add(const Path&);
-    void to_gpx(std::string) const;
+    void to_gpx(std::string, const node_map*) const;
     double get_weight() const;
     bool empty() const;
 };
