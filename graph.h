@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "types.h"
 #include "cluster.h"
+#include "pugixml/src/pugixml.hpp"
 
 /*
  * Constructors initialize nodes and node_neighbours_map;
@@ -12,11 +13,11 @@
 
 class Graph {
 private:
-    node_map nodes;
-    adj_list node_neighbours_map;
+    node_map nodes = node_map{};
+    adj_list node_neighbours_map = adj_list{};
     cluster_map clusters {};
 public:
-    // Graph(...);
+    Graph(const std::string&);
     void clusterize();
     const adj_nodes* get_neighbours(uint64_t) const;
 };
