@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "path.h"
 
 void Path::add(uint64_t new_node, double new_weight) {
@@ -10,12 +11,21 @@ void Path::add(const Path& other) {
     weight += other.weight;
 }
 
+void Path::add_reversed(const Path& other) {
+    path.insert(path.end(), other.path.rbegin(), other.path.rend());
+    weight += other.weight;
+}
+
 double Path::get_weight() const {
     return weight;
 }
 
 bool Path::empty() const {
     return path.empty();
+}
+
+void Path::reverse() {
+    std::reverse(path.begin(), path.end());
 }
 
 size_t PathHash::operator()(const Path &p) const {

@@ -51,6 +51,11 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
         }
     }
 
+    // retrace (do not add start node)
     Path path;
-    path.add(start, 0);
+    uint64_t current = goal;
+//    while (current != start) {
+//        path.add_reversed();
+//    }
+    path.reverse();
 }
