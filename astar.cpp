@@ -39,7 +39,8 @@ Path find_path_astar(uint64_t start, uint64_t goal, const node_map& nodes,
         if (current == goal) {
             break;
         }
-        for (const auto& [neighbour, path] : node_neighbours_map.at(current)) {
+        for (const auto& x : node_neighbours_map.at(current)) {
+            uint64_t neighbour = x.first; const Path& path = x.second;
             double new_cost = cost_so_far.at(current) + path.get_weight();
             if (cost_so_far.count(neighbour) == 0 || new_cost < cost_so_far.at(neighbour)) {
                 cost_so_far[neighbour] = new_cost;
