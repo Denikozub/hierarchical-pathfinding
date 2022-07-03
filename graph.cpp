@@ -7,3 +7,7 @@ const adj_nodes* Graph::get_neighbours(uint64_t id) const {
     }
     return &node_neighbours_map.at(id);
 }
+
+const Node* Graph::get_node(uint64_t id) const {
+    return &nodes.at(id);
+}
