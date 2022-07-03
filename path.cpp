@@ -20,6 +20,10 @@ bool Path::empty() const {
     return path.empty();
 }
 
+bool Path::operator==(const Path &other) const {
+    return this->path == other.path;
+}
+
 size_t PathHash::operator()(const Path &p) const {
     return std::hash<double>()(p.weight) ^ (*p.path.begin() * *p.path.end());
 }

@@ -24,6 +24,8 @@ public:
     void to_gpx(std::string) const;
     double get_weight() const;
     bool empty() const;
+
+    bool operator==(const Path&) const;
 };
 
 class PathHash {
