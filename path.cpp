@@ -1,7 +1,5 @@
 #include "path.h"
 
-Path::Path(const node_map* nodes) : nodes(nodes) {}
-
 void Path::add(uint64_t new_node, double new_weight) {
     path.insert(path.end(), new_node);
     weight += new_weight;
@@ -21,5 +19,8 @@ bool Path::empty() const {
 }
 
 size_t PathHash::operator()(const Path &p) const {
-    return std::hash<double>()(p.weight) ^ (*p.path.begin() * *p.path.end());
+    if (p.path.empty()) {
+        return 0;
+    }
+    return std::hash<double>()(p.weight) ^ (*p.path.begin() * *(p.path.end() - 1));
 }
