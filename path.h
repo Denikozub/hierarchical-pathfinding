@@ -17,16 +17,19 @@ private:
     double weight {0};
     friend class PathHash;
 public:
+    Path() = default;
     explicit Path(const node_map*);
     void add(uint64_t, double);
     void add(const Path&);
     void to_gpx(std::string) const;
     double get_weight() const;
+    bool empty() const;
+
+    bool operator==(const Path&) const;
 };
 
 class PathHash {
-public:
-    size_t operator()(const Path &p) const;
+public: size_t operator()(const Path&) const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_PATH_H
