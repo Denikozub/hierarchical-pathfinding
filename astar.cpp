@@ -1,7 +1,6 @@
 #include <cmath>
 #include <queue>
 #include <unordered_map>
-#include <exception>
 #include "astar.h"
 #include "node.h"
 
