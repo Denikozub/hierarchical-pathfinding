@@ -57,7 +57,7 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
         if (came_from.count(current) == 0) {
             throw std::runtime_error("No path found");
         }
-        path.add_reversed(came_from.at(current).second);
+        path.add_reversed(std::move(came_from.at(current).second));
         current = came_from.at(current).first;
     }
     path.reverse();

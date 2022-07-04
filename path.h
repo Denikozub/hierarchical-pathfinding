@@ -18,7 +18,9 @@ private:
 public:
     void add(uint64_t, double);
     void add(const Path&);
+    void add (Path&&);
     void add_reversed(const Path&);
+    void add_reversed(Path&&);
     void to_gpx(const std::string&, const node_map*) const;
     double get_weight() const;
     bool empty() const;
