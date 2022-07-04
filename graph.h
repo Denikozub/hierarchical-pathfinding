@@ -17,9 +17,10 @@ private:
     adj_list node_neighbours_map = adj_list{};
     cluster_map clusters {};
 public:
-    Graph(const std::string&);
+    explicit Graph(const std::string&);
     void clusterize();
     const adj_nodes* get_neighbours(uint64_t) const;
+    const Node* get_node(uint64_t) const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_GRAPH_H

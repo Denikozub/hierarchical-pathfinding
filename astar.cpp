@@ -1,6 +1,7 @@
 #include <cmath>
 #include <queue>
 #include <unordered_map>
+#include <exception>
 #include "astar.h"
 #include "node.h"
 
@@ -23,14 +24,13 @@ static double heuristic(const Node& node1, const Node& node2, double heuristic_m
 
 typedef std::pair<uint64_t, double> Id_value;
 
-Path find_path_astar(uint64_t start, uint64_t goal, const node_map& nodes,
-                     const adj_list& node_neighbours_map, double heuristic_multiplier=10) {
+Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double heuristic_multiplier) {
     auto cmp = [](const Id_value& left, const Id_value& right) { return left.second < right.second; };
     std::priority_queue<Id_value, std::vector<Id_value>, decltype(cmp)> frontier(cmp);
     frontier.push({start, 0});
 
-    std::unordered_map<uint64_t, Path> came_from;
-    came_from[start] = Path();
+    std::unordered_map<uint64_t, std::pair<uint64_t, Path>> came_from;
+    came_from[start] = {start, Path()};
     std::unordered_map<uint64_t, double> cost_so_far;
     cost_so_far[start] = 0;
 
@@ -39,16 +39,28 @@ Path find_path_astar(uint64_t start, uint64_t goal, const node_map& nodes,
         if (current == goal) {
             break;
         }
-        for (const auto& x : node_neighbours_map.at(current)) { // structure bindings - neighbour & weight
-            double new_cost = cost_so_far.at(current) + x.second.get_weight();
-            if (cost_so_far.count(x.first) == 0 || new_cost < cost_so_far.at(x.first)) { // find faster?
-                cost_so_far[x.first] = new_cost;
-                double priority = new_cost + heuristic(nodes.at(goal), nodes.at(x.first), heuristic_multiplier);
-                frontier.push({x.first, priority});
-                came_from[x.first] = x.second;
+        for (const auto& [neighbour, path] : *graph.get_neighbours(current)) {
+            double new_cost = cost_so_far.at(current) + path.get_weight();
+            if (cost_so_far.count(neighbour) == 0 || new_cost < cost_so_far.at(neighbour)) {
+                cost_so_far[neighbour] = new_cost;
+                double priority = new_cost +
+                                  heuristic(*graph.get_node(goal), *graph.get_node(neighbour), heuristic_multiplier);
+                frontier.push({neighbour, priority});
+                came_from[neighbour] = {current, path};
             }
         }
     }
 
-    Path path(&nodes);
+    // retrace (do not add start node)
+    Path path;
+    uint64_t current = goal;
+    while (current != start) {
+        if (came_from.count(current) == 0) {
+            throw std::runtime_error("No path found");
+        }
+        path.add_reversed(came_from.at(current).second);
+        current = came_from.at(current).first;
+    }
+    path.reverse();
+    return path;
 }

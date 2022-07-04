@@ -6,7 +6,7 @@ Graph::Graph(const std::string &input_file) {
 
     pugi::xml_document document;
     if (!document.load_file(input_file.c_str())) {
-        //TODO: throw error if we don't parse input file?
+        // TODO: throw error if we don't parse input file?
         exit(1);
     }
 
@@ -27,7 +27,7 @@ Graph::Graph(const std::string &input_file) {
             uint64_t target = xml_note.attribute("target").as_ullong();
             double weight = std::stod(xml_note.begin()->text().get());
 
-            Path path = Path(&(this->nodes));
+            Path path = Path();
             path.add(target, weight);
 
             adj_list *neighbours_map = &(this->node_neighbours_map);
@@ -46,4 +46,8 @@ const adj_nodes *Graph::get_neighbours(uint64_t id) const {
         return clusters.at(cluster_id).get_outer_neighbours(id);
     }
     return &node_neighbours_map.at(id);
+}
+
+const Node* Graph::get_node(uint64_t id) const {
+    return &nodes.at(id);
 }

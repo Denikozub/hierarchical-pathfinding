@@ -7,24 +7,22 @@
 #include "node.h"
 
 /*
- * Needs node_map* for GPX output;
+ * Does not include start node
  */
 
 class Path {
 private:
-    const node_map* nodes = nullptr;
     std::vector<uint64_t> path {};
     double weight {0};
     friend class PathHash;
 public:
-    Path() = default;
-    explicit Path(const node_map*);
     void add(uint64_t, double);
     void add(const Path&);
-    void to_gpx(std::string) const;
+    void add_reversed(const Path&);
+    void to_gpx(std::string, const node_map*) const;
     double get_weight() const;
     bool empty() const;
-
+    void reverse();
     bool operator==(const Path&) const;
 };
 
