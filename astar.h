@@ -5,6 +5,6 @@
 #include "graph.h"
 #include "cstdint"
 
-Path find_path_astar(uint64_t, uint64_t, const Graph&, double=10);
+Path find_path_astar(uint64_t start, uint64_t goal, const Graph&, double heuristic_multiplier = 10);
 
 #endif //HIERARCHICAL_PATHFINDING_ASTAR_H

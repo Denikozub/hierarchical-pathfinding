@@ -1,15 +1,12 @@
 #include <cstring>
 #include "graph.h"
 
-Graph::Graph(const std::string &input_file) {
-    this->nodes = node_map{};
-
+Graph from_graphml(const std::string& input_file) {
     pugi::xml_document document;
     if (!document.load_file(input_file.c_str())) {
-        // TODO: throw error if we don't parse input file?
-        exit(1);
+        throw std::runtime_error("Could not load file");
     }
-
+    Graph graph;
     for (pugi::xml_node &xml_note: document.child("graphml").child("graph")) {
         if (strcmp(xml_note.name(), "node") == 0) {
             double lat = 0, lon = 0;
@@ -21,7 +18,7 @@ Graph::Graph(const std::string &input_file) {
                 }
             }
             uint64_t id = xml_note.attribute("id").as_ullong();
-            this->nodes.insert({id, Node(lat, lon)});
+            graph.nodes.insert({id, Node(lat, lon)});
         } else {
             uint64_t source = xml_note.attribute("source").as_ullong();
             uint64_t target = xml_note.attribute("target").as_ullong();
@@ -30,14 +27,14 @@ Graph::Graph(const std::string &input_file) {
             Path path = Path();
             path.add(target, weight);
 
-            adj_list *neighbours_map = &(this->node_neighbours_map);
-            if (neighbours_map->find(source) != neighbours_map->end()) {
-                neighbours_map->operator[](source).insert({target, path});
+            if (graph.node_neighbours_map.find(source) != graph.node_neighbours_map.end()) {
+                graph.node_neighbours_map[source].insert({target, path});
             } else {
-                neighbours_map->operator[](source) = adj_nodes{{target, path}};
+                graph.node_neighbours_map[source] = adj_nodes{{target, path}};
             }
         }
     }
+    return graph;
 }
 
 const adj_nodes *Graph::get_neighbours(uint64_t id) const {

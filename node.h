@@ -13,8 +13,8 @@ private:
     int cluster_no {-1};
     bool is_outer_ {false};
 public:
-    Node(double, double);
-    Node(double&&, double&&);
+    Node(double lat, double lon);
+    Node(double&& lat, double&& lon);
     double get_lat() const;
     void set_lat(double);
     double get_lon() const;

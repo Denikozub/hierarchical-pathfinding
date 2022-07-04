@@ -21,7 +21,7 @@ private:
     const std::unordered_set<uint64_t> cluster_nodes {};
     adj_list outer_neighbours_map {};
 public:
-    Cluster(node_map*, const adj_list*, std::unordered_set<uint64_t>&&);
+    Cluster(node_map*, const adj_list*, std::unordered_set<uint64_t>&& cluster_nodes);
     void compute();
     const adj_nodes* get_outer_neighbours(uint64_t) const;
 };

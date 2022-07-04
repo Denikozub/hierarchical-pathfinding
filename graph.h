@@ -11,13 +11,16 @@
  * Graph::clusterize() initializes clusters and updates Node::cluster_no;
  */
 
+class Graph;
+Graph from_graphml(const std::string&);
+
 class Graph {
 private:
     node_map nodes = node_map{};
     adj_list node_neighbours_map = adj_list{};
     cluster_map clusters {};
+    friend Graph from_graphml(const std::string&);
 public:
-    explicit Graph(const std::string&);
     void clusterize();
     const adj_nodes* get_neighbours(uint64_t) const;
     const Node* get_node(uint64_t) const;
