@@ -1,6 +1,7 @@
 #include <cmath>
 #include <queue>
 #include <unordered_map>
+#include <exception>
 #include "astar.h"
 #include "node.h"
 
@@ -28,8 +29,8 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
     std::priority_queue<Id_value, std::vector<Id_value>, decltype(cmp)> frontier(cmp);
     frontier.push({start, 0});
 
-    std::unordered_map<uint64_t, Path> came_from;
-    came_from[start] = Path();
+    std::unordered_map<uint64_t, std::pair<uint64_t, Path>> came_from;
+    came_from[start] = {start, Path()};
     std::unordered_map<uint64_t, double> cost_so_far;
     cost_so_far[start] = 0;
 
@@ -46,7 +47,7 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
                 double priority = new_cost +
                         heuristic(*graph.get_node(goal), *graph.get_node(neighbour), heuristic_multiplier);
                 frontier.push({neighbour, priority});
-                came_from[neighbour] = path;
+                came_from[neighbour] = {current, path};
             }
         }
     }
@@ -54,8 +55,13 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
     // retrace (do not add start node)
     Path path;
     uint64_t current = goal;
-//    while (current != start) {
-//        path.add_reversed();
-//    }
+    while (current != start) {
+        if (came_from.count(current) == 0) {
+            throw std::runtime_error("No path found");
+        }
+        path.add_reversed(came_from.at(current).second);
+        current = came_from.at(current).first;
+    }
     path.reverse();
+    return path;
 }
