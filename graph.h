@@ -28,7 +28,7 @@ private:
     std::unordered_map<int, adj_list> clusters {};
     friend Graph from_graphml(const std::string&);
     friend Path find_path_astar(uint64_t, uint64_t, const Graph&, double);
-    std::vector<std::unordered_set<uint64_t>> find_clusters(double) const;
+    std::vector<std::unordered_set<uint64_t>> find_clusters(double);
 public:
     void clusterize(double threshold);
     size_t cluster_count() const;

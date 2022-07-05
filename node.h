@@ -24,6 +24,7 @@ public:
     bool has_cluster() const;
     void set_outer(bool);
     bool is_outer() const;
+    void reset_cluster_data();
 };
 
 #endif //HIERARCHICAL_PATHFINDING_NODE_H

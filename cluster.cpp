@@ -38,10 +38,11 @@ public:
     }
 };
 
-std::vector<std::unordered_set<uint64_t>> Graph::find_clusters(double threshold) const {
+std::vector<std::unordered_set<uint64_t>> Graph::find_clusters(double threshold) {
     std::vector<Cluster> cluster_set{};
     int it_num = 0;
     for (const auto& [id, node] : nodes) {
+        nodes.at(id).reset_cluster_data();
         for (auto& cluster: cluster_set) {
             if (cluster.distance(node) <= threshold) {
                 cluster.add_node(id, node);
