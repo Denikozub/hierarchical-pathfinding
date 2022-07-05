@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(pugixml)
 
 add_executable(hierarchical_pathfinding
-        node.h path.h graph.h main.cpp path.cpp node.cpp cluster.cpp graph.cpp astar.cpp)
+        node.h path.h graph.h main.cpp path.cpp node.cpp cluster.cpp graph.cpp astar.cpp haversine.h haversine.cpp)
 
 set_target_properties(hierarchical_pathfinding PROPERTIES LINKER_LANGUAGE CXX)
 

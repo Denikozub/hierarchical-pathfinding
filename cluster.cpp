@@ -1,7 +1,8 @@
 #include "graph.h"
+#include "haversine.h"
 
-std::set<std::unordered_set<uint64_t>> Graph::find_clusters(double) {
-    // set all Nodes to default
+std::set<std::unordered_set<uint64_t>> Graph::find_clusters(double) const {
+
 }
 
 void Graph::clusterize(double threshold) {

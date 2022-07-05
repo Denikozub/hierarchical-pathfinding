@@ -1,27 +1,13 @@
-#include <cmath>
 #include <queue>
 #include <unordered_map>
 #include "graph.h"
-#include "node.h"
+#include "haversine.h"
 
-static double haversine(const Node& node1, const Node& node2) {
-    double lat1 = node1.get_lat(), lon1 = node1.get_lon(), \
-           lat2 = node2.get_lat(), lon2 = node2.get_lon();
-    double dLat = (lat2 - lat1) * M_PI / 180.0;
-    double dLon = (lon2 - lon1) * M_PI / 180.0;
-
-    lat1 = (lat1) * M_PI / 180.0;
-    lat2 = (lat2) * M_PI / 180.0;
-
-    double a = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
-    return 6371 * 2 * asin(sqrt(a));
-}
+typedef std::pair<uint64_t, double> Id_value;
 
 static double heuristic(const Node& node1, const Node& node2, double heuristic_multiplier) {
     return haversine(node1, node2) * heuristic_multiplier;
 }
-
-typedef std::pair<uint64_t, double> Id_value;
 
 static Path retrace(uint64_t start, uint64_t goal, std::unordered_map<uint64_t, std::pair<uint64_t, Path>>&& came_from) {
     Path path;
