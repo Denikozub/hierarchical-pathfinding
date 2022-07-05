@@ -1,6 +1,5 @@
 #include <iostream>
 #include "graph.h"
-#include "astar.h"
 
 int main()
 {
