@@ -1,5 +1,9 @@
 #include "graph.h"
 
+std::set<std::unordered_set<uint64_t>> Graph::find_clusters(double) {
+
+}
+
 void Graph::clusterize(double threshold) {
     int cluster_no = 0;
     for (const auto& cluster_nodes : find_clusters(threshold)) {

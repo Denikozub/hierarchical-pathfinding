@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <unordered_map>
-#include <unordered_set>
+#include <set>
 #include "types.h"
 #include "path.h"
 
@@ -18,7 +18,7 @@ private:
     std::unordered_map<int, adj_list> clusters {};
     friend Graph from_graphml(const std::string&);
     friend Path find_path_astar(uint64_t, uint64_t, const Graph&, double);
-    std::unordered_set<std::unordered_set<uint64_t>> find_clusters(double);
+    std::set<std::unordered_set<uint64_t>> find_clusters(double);
 public:
     void clusterize(double threshold);
     const adj_nodes* get_neighbours(uint64_t) const;
