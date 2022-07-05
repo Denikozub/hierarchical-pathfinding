@@ -43,11 +43,18 @@ std::vector<std::unordered_set<uint64_t>> Graph::find_clusters(double threshold)
     int it_num = 0;
     for (const auto& [id, node] : nodes) {
         nodes.at(id).reset_cluster_data();
+        bool added = false;
         for (auto& cluster: cluster_set) {
             if (cluster.distance(node) <= threshold) {
                 cluster.add_node(id, node);
+                added = true;
                 break;
             }
+        }
+        if (!added) {
+            Cluster cluster;
+            cluster.add_node(id, node);
+            cluster_set.push_back(cluster);
         }
         // combine clusters
         if (it_num % int(1 + nodes.size() / CLUSTER_MERGE_ITER_COUNT) == 0) {
