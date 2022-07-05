@@ -27,6 +27,7 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
     auto cmp = [](const Id_value& left, const Id_value& right) { return left.second < right.second; };
     std::priority_queue<Id_value, std::vector<Id_value>, decltype(cmp)> frontier(cmp);
     frontier.push({start, 0});
+    int goal_cluster = graph.nodes.at(goal).get_cluster_no();
 
     std::unordered_map<uint64_t, std::pair<uint64_t, Path>> came_from;
     came_from[start] = {start, Path()};
@@ -38,7 +39,8 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
         if (current == goal) {
             break;
         }
-        for (const auto& [neighbour, path] : *graph.get_neighbours(current)) {
+        bool use_clusters = goal_cluster == graph.nodes.at(current).get_cluster_no();
+        for (const auto& [neighbour, path] : *graph.get_neighbours(current, use_clusters)) {
             double new_cost = cost_so_far.at(current) + path.get_weight();
             if (cost_so_far.count(neighbour) == 0 || new_cost < cost_so_far.at(neighbour)) {
                 cost_so_far[neighbour] = new_cost;

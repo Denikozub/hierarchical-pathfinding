@@ -32,7 +32,7 @@ private:
 public:
     void clusterize(double threshold);
     size_t cluster_count() const;
-    const adj_nodes* get_neighbours(uint64_t) const;
+    const adj_nodes* get_neighbours(uint64_t, bool use_clusters = true) const;
     const Node* get_node(uint64_t) const;
 };
 

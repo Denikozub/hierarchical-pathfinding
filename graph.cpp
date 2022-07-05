@@ -42,8 +42,8 @@ size_t Graph::cluster_count() const {
     return clusters.size();
 }
 
-const adj_nodes *Graph::get_neighbours(uint64_t id) const {
-    if (nodes.at(id).has_cluster() && nodes.at(id).is_outer()) {
+const adj_nodes *Graph::get_neighbours(uint64_t id, bool use_clusters) const {
+    if (use_clusters && nodes.at(id).has_cluster() && nodes.at(id).is_outer()) {
         int cluster_id = nodes.at(id).get_cluster_no();
         return &clusters.at(cluster_id).at(id);
     }

@@ -74,6 +74,7 @@ std::vector<std::unordered_set<uint64_t>> Graph::find_clusters(double threshold)
 void Graph::clusterize(double threshold) {
     int cluster_no = 0;
     for (const auto& cluster_nodes : find_clusters(threshold)) {
+        // find outer nodes of the cluster
         std::unordered_set<uint64_t> outer_nodes;
         for (uint64_t cluster_node: cluster_nodes) {
             for (const auto& [neighbour, _] : *get_neighbours(cluster_node)) {
@@ -86,14 +87,22 @@ void Graph::clusterize(double threshold) {
             nodes.at(cluster_node).set_cluster_no(cluster_no);
         }
         adj_list outer_neighbours_map;
+        // find neighbours of each outer node
         for (uint64_t outer_node : outer_nodes) {
             outer_neighbours_map[outer_node] = {};
+            // add all other outer nodes as neighbours
             for (uint64_t neighbour : outer_nodes) {
                 if (outer_node == neighbour) {
                     continue;
                 }
                 Path path = find_path_astar(outer_node, neighbour, *this);
                 if (!path.empty()) {
+                    outer_neighbours_map[outer_node].insert({neighbour, path});
+                }
+            }
+            // add all neighbours not from cluster
+            for (const auto& [neighbour, path] : *get_neighbours(outer_node)) {
+                if (nodes.at(neighbour).get_cluster_no() != cluster_no) {
                     outer_neighbours_map[outer_node].insert({neighbour, path});
                 }
             }
