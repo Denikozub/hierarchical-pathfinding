@@ -3,9 +3,19 @@
 
 #include <cstdint>
 #include <unordered_map>
+#include <unordered_set>
 #include <set>
-#include "types.h"
 #include "path.h"
+
+class PairHash;
+typedef std::unordered_set<std::pair<uint64_t, Path>, PairHash> adj_nodes;
+typedef std::unordered_map<uint64_t, adj_nodes> adj_list;
+
+class PairHash {
+public: size_t operator()(const std::pair<uint64_t, Path> &p) const {
+        return p.first + PathHash()(p.second);
+    }
+};
 
 class Graph;
 Graph from_graphml(const std::string&);
@@ -21,6 +31,7 @@ private:
     std::set<std::unordered_set<uint64_t>> find_clusters(double);
 public:
     void clusterize(double threshold);
+    size_t cluster_count() const;
     const adj_nodes* get_neighbours(uint64_t) const;
     const Node* get_node(uint64_t) const;
 };

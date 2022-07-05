@@ -38,9 +38,13 @@ Graph from_graphml(const std::string& input_file) {
     return graph;
 }
 
+size_t Graph::cluster_count() const {
+    return clusters.size();
+}
+
 const adj_nodes *Graph::get_neighbours(uint64_t id) const {
     if (nodes.at(id).has_cluster() && nodes.at(id).is_outer()) {
-        uint64_t cluster_id = nodes.at(id).get_cluster_no();
+        int cluster_id = nodes.at(id).get_cluster_no();
         return &clusters.at(cluster_id).at(id);
     }
     return &node_neighbours_map.at(id);
