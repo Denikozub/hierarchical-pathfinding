@@ -1,7 +1,7 @@
 #include "graph.h"
 
 std::set<std::unordered_set<uint64_t>> Graph::find_clusters(double) {
-
+    // set all Nodes to default
 }
 
 void Graph::clusterize(double threshold) {
@@ -9,13 +9,14 @@ void Graph::clusterize(double threshold) {
     for (const auto& cluster_nodes : find_clusters(threshold)) {
         std::unordered_set<uint64_t> outer_nodes;
         for (uint64_t cluster_node: cluster_nodes) {
-            nodes.at(cluster_node).set_cluster_no(cluster_no);
-            for (const auto& [neighbour, _] : node_neighbours_map.at(cluster_node)) {
+            for (const auto& [neighbour, _] : *get_neighbours(cluster_node)) {
                 if (!cluster_nodes.contains(neighbour)) {
                     outer_nodes.insert(cluster_node);
                     nodes.at(cluster_node).set_outer(true);
+                    break;
                 }
             }
+            nodes.at(cluster_node).set_cluster_no(cluster_no);
         }
         adj_list outer_neighbours_map;
         for (uint64_t outer_node : outer_nodes) {
