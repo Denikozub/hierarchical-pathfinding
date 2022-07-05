@@ -40,3 +40,7 @@ bool Node::is_outer() const {
     return is_outer_;
 }
 
+void Node::reset_cluster_data() {
+    cluster_no = -1;
+    is_outer_ = false;
+}

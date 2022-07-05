@@ -2,24 +2,37 @@
 #define HIERARCHICAL_PATHFINDING_GRAPH_H
 
 #include <cstdint>
-#include "types.h"
-#include "cluster.h"
-#include "pugixml/src/pugixml.hpp"
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+#include "path.h"
 
-/*
- * Constructors initialize nodes and node_neighbours_map;
- * Graph::clusterize() initializes clusters and updates Node::cluster_no;
- */
+class PairHash;
+typedef std::unordered_set<std::pair<uint64_t, Path>, PairHash> adj_nodes;
+typedef std::unordered_map<uint64_t, adj_nodes> adj_list;
+
+class PairHash {
+public: size_t operator()(const std::pair<uint64_t, Path> &p) const {
+        return p.first + PathHash()(p.second);
+    }
+};
+
+class Graph;
+Graph from_graphml(const std::string&);
+Path find_path_astar(uint64_t start, uint64_t goal, const Graph&, double heuristic_multiplier = 10);
 
 class Graph {
 private:
     node_map nodes = node_map{};
     adj_list node_neighbours_map = adj_list{};
-    cluster_map clusters {};
+    std::unordered_map<int, adj_list> clusters {};
+    friend Graph from_graphml(const std::string&);
+    friend Path find_path_astar(uint64_t, uint64_t, const Graph&, double);
+    std::vector<std::unordered_set<uint64_t>> find_clusters(double);
 public:
-    explicit Graph(const std::string&);
-    void clusterize();
-    const adj_nodes* get_neighbours(uint64_t) const;
+    void clusterize(double threshold);
+    size_t cluster_count() const;
+    const adj_nodes* get_neighbours(uint64_t, bool use_clusters = true) const;
     const Node* get_node(uint64_t) const;
 };
 

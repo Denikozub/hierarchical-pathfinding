@@ -11,7 +11,17 @@ void Path::add(const Path& other) {
     weight += other.weight;
 }
 
+void Path::add(Path&& other) {
+    path.insert(path.end(), other.path.begin(), other.path.end());
+    weight += other.weight;
+}
+
 void Path::add_reversed(const Path& other) {
+    path.insert(path.end(), other.path.rbegin(), other.path.rend());
+    weight += other.weight;
+}
+
+void Path::add_reversed(Path&& other) {
     path.insert(path.end(), other.path.rbegin(), other.path.rend());
     weight += other.weight;
 }
