@@ -42,7 +42,7 @@ bool Path::operator==(const Path &other) const {
     return this->path == other.path;
 }
 
-void Path::to_gpx(uint64_t start, const std::string &file_path, const node_map *all_node_map) const {
+void Path::to_gpx(uint64_t start, const std::string &file_path, const node_map *nodes) const {
     FILE *gpx_file = fopen(file_path.c_str(), "w");
     if (gpx_file == nullptr) {
         throw std::runtime_error("Could not open gpx file");
@@ -56,18 +56,18 @@ void Path::to_gpx(uint64_t start, const std::string &file_path, const node_map *
                       "http://www.topografix.com/GPX/1/1/gpx.xsd\" version=\"1.1\">\n"
                       );
     fprintf(gpx_file, "\t<wpt lat=\"%f\" lon=\"%f\">\n\t\t<name>Start</name>\n\t</wpt>\n",
-            all_node_map->at(start).get_lat(),
-            all_node_map->at(start).get_lon());
+            nodes->at(start).get_lat(),
+            nodes->at(start).get_lon());
 
     fprintf(gpx_file, "\t<wpt lat=\"%f\" lon=\"%f\">\n\t\t<name>Goal</name>\n\t</wpt>\n",
-            all_node_map->at(*path.rbegin()).get_lat(),
-            all_node_map->at(*path.rbegin()).get_lon());
+            nodes->at(*path.rbegin()).get_lat(),
+            nodes->at(*path.rbegin()).get_lon());
 
     fprintf(gpx_file, "\t<trk>\n\t\t<name>%s</name>\n\t\t<trkseg>\n", "road");
     for (uint64_t node_id : this->path) {
         fprintf(gpx_file, "\t\t\t<trkpt lat=\"%f\" lon=\"%f\"></trkpt>\n",
-                all_node_map->at(node_id).get_lat(),
-                all_node_map->at(node_id).get_lon());
+                nodes->at(node_id).get_lat(),
+                nodes->at(node_id).get_lon());
     }
     fprintf(gpx_file, "\t\t</trkseg>\n\t</trk>\n</gpx>\n");
 }
