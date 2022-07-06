@@ -69,7 +69,7 @@ void Path::to_gpx(uint64_t start, const std::string &file_path, const node_map *
                 all_node_map->at(node_id).get_lat(),
                 all_node_map->at(node_id).get_lon());
     }
-    fprintf(gpx_file, "\t\t</trkseg>\n\t</trk>\n<gpx>\n");
+    fprintf(gpx_file, "\t\t</trkseg>\n\t</trk>\n</gpx>\n");
 }
 
 size_t PathHash::operator()(const Path &p) const {
