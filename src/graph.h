@@ -36,6 +36,7 @@ public:
     const adj_nodes* get_neighbours(uint64_t, bool use_clusters = true) const;
     const Node* get_node(uint64_t) const;
     const node_map* get_nodes() const;
+    void export_nodes(const std::string&) const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_GRAPH_H

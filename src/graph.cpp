@@ -38,6 +38,18 @@ Graph from_graphml(const std::string& input_file) {
     return graph;
 }
 
+void Graph::export_nodes(const std::string& file_path) const {
+    FILE *nodes_file = fopen(file_path.c_str(), "w");
+    if (nodes_file == nullptr) {
+        throw std::runtime_error("Could not open nodes file");
+    }
+    fprintf(nodes_file, "id,lat,lon,cluster_no,is_outer\n");
+    for (const auto& [id, node] : this->nodes) {
+        fprintf(nodes_file, "%llu,%f,%f,%d,%d\n", id, node.get_lat(),
+                node.get_lon(), node.get_cluster_no(), int(node.is_outer()));
+    }
+}
+
 size_t Graph::cluster_count() const {
     return this->clusters.size();
 }
