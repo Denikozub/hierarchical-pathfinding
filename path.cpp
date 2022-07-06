@@ -64,6 +64,9 @@ void Path::to_gpx(uint64_t start, const std::string &file_path, const node_map *
             nodes->at(*path.rbegin()).get_lon());
 
     fprintf(gpx_file, "\t<trk>\n\t\t<name>%s</name>\n\t\t<trkseg>\n", "road");
+    fprintf(gpx_file, "\t\t\t<trkpt lat=\"%f\" lon=\"%f\"></trkpt>\n",
+            nodes->at(start).get_lat(),
+            nodes->at(start).get_lon());
     for (uint64_t node_id : this->path) {
         fprintf(gpx_file, "\t\t\t<trkpt lat=\"%f\" lon=\"%f\"></trkpt>\n",
                 nodes->at(node_id).get_lat(),

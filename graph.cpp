@@ -53,3 +53,7 @@ const adj_nodes *Graph::get_neighbours(uint64_t id, bool use_clusters) const {
 const Node* Graph::get_node(uint64_t id) const {
     return &nodes.at(id);
 }
+
+const node_map* Graph::get_nodes() const {
+    return &nodes;
+}

@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <vector>
 #include "path.h"
+#include "node.h"
 
 class PairHash;
 typedef std::unordered_set<std::pair<uint64_t, Path>, PairHash> adj_nodes;
@@ -34,6 +35,7 @@ public:
     size_t cluster_count() const;
     const adj_nodes* get_neighbours(uint64_t, bool use_clusters = true) const;
     const Node* get_node(uint64_t) const;
+    const node_map* get_nodes() const;
 };
 
 #endif //HIERARCHICAL_PATHFINDING_GRAPH_H
