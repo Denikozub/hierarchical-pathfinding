@@ -1,0 +1,39 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "lat": 1,
+      "lon": 5,
+      "id": 1
+    },
+    {
+      "lat": 2,
+      "lon": 4,
+      "id": 2
+    },
+    {
+      "lat": 3,
+      "lon": 3,
+      "id": 3
+    }
+  ],
+  "links": [
+    {
+      "weight": 0.2,
+      "source": 1,
+      "target": 2
+    },
+    {
+      "weight": 0.5,
+      "source": 2,
+      "target": 3
+    },
+    {
+      "weight": 0.67,
+      "source": 3,
+      "target": 1
+    }
+  ]
+}
