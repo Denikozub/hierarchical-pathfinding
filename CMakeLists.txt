@@ -10,4 +10,4 @@ add_executable(hierarchical_pathfinding
 
 set_target_properties(hierarchical_pathfinding PROPERTIES LINKER_LANGUAGE CXX)
 
-target_link_libraries(hierarchical_pathfinding src/pugixml)
+target_link_libraries(hierarchical_pathfinding pugixml)
