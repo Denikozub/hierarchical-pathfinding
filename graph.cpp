@@ -39,21 +39,21 @@ Graph from_graphml(const std::string& input_file) {
 }
 
 size_t Graph::cluster_count() const {
-    return clusters.size();
+    return this->clusters.size();
 }
 
 const adj_nodes *Graph::get_neighbours(uint64_t id, bool use_clusters) const {
-    if (use_clusters && nodes.at(id).has_cluster() && nodes.at(id).is_outer()) {
-        int cluster_id = nodes.at(id).get_cluster_no();
-        return &clusters.at(cluster_id).at(id);
+    if (use_clusters && this->nodes.at(id).has_cluster() && this->nodes.at(id).is_outer()) {
+        int cluster_id = this->nodes.at(id).get_cluster_no();
+        return &this->clusters.at(cluster_id).at(id);
     }
-    return &node_neighbours_map.at(id);
+    return &this->node_neighbours_map.at(id);
 }
 
 const Node* Graph::get_node(uint64_t id) const {
-    return &nodes.at(id);
+    return &this->nodes.at(id);
 }
 
 const node_map* Graph::get_nodes() const {
-    return &nodes;
+    return &this->nodes;
 }

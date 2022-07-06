@@ -2,40 +2,40 @@
 #include "path.h"
 
 void Path::add(uint64_t new_node, double new_weight) {
-    path.insert(path.end(), new_node);
-    weight += new_weight;
+    this->path.insert(this->path.end(), new_node);
+    this->weight += new_weight;
 }
 
 void Path::add(const Path& other) {
-    path.insert(path.end(), other.path.begin(), other.path.end());
-    weight += other.weight;
+    this->path.insert(this->path.end(), other.path.begin(), other.path.end());
+    this->weight += other.weight;
 }
 
 void Path::add(Path&& other) {
-    path.insert(path.end(), other.path.begin(), other.path.end());
-    weight += other.weight;
+    this->path.insert(this->path.end(), other.path.begin(), other.path.end());
+    this->weight += other.weight;
 }
 
 void Path::add_reversed(const Path& other) {
-    path.insert(path.end(), other.path.rbegin(), other.path.rend());
-    weight += other.weight;
+    this->path.insert(this->path.end(), other.path.rbegin(), other.path.rend());
+    this->weight += other.weight;
 }
 
 void Path::add_reversed(Path&& other) {
-    path.insert(path.end(), other.path.rbegin(), other.path.rend());
-    weight += other.weight;
+    this->path.insert(this->path.end(), other.path.rbegin(), other.path.rend());
+    this->weight += other.weight;
 }
 
 double Path::get_weight() const {
-    return weight;
+    return this->weight;
 }
 
 bool Path::empty() const {
-    return path.empty();
+    return this->path.empty();
 }
 
 void Path::reverse() {
-    std::reverse(path.begin(), path.end());
+    std::reverse(this->path.begin(), this->path.end());
 }
 
 bool Path::operator==(const Path &other) const {

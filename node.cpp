@@ -5,42 +5,42 @@ Node::Node(double lat, double lon) : lat(lat), lon(lon) {}
 Node::Node(double&& lat, double&& lon) : lat(lat), lon(lon) {}
 
 double Node::get_lat() const {
-    return lat;
+    return this->lat;
 }
 
 void Node::set_lat(double new_lat) {
-    lat = new_lat;
+    this->lat = new_lat;
 }
 
 double Node::get_lon() const {
-    return lon;
+    return this->lon;
 }
 
 void Node::set_lon(double new_lon) {
-    lon = new_lon;
+    this->lon = new_lon;
 }
 
 int Node::get_cluster_no() const {
-    return cluster_no;
+    return this->cluster_no;
 }
 
 void Node::set_cluster_no(int new_cluster_no) {
-    cluster_no = new_cluster_no;
+    this->cluster_no = new_cluster_no;
 }
 
 bool Node::has_cluster() const {
-    return cluster_no == -1;
+    return this->cluster_no == -1;
 }
 
 void Node::set_outer(bool new_is_outer_) {
-    is_outer_ = new_is_outer_;
+    this->is_outer_ = new_is_outer_;
 }
 
 bool Node::is_outer() const {
-    return is_outer_;
+    return this->is_outer_;
 }
 
 void Node::reset_cluster_data() {
-    cluster_no = -1;
-    is_outer_ = false;
+    this->cluster_no = -1;
+    this->is_outer_ = false;
 }
