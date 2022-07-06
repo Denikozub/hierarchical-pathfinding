@@ -1,6 +1,6 @@
 #include <cstring>
 #include "graph.h"
-#include "pugixml/src/pugixml.hpp"
+#include "pugixml/pugixml.hpp"
 
 Graph from_graphml(const std::string& input_file) {
     pugi::xml_document document;
