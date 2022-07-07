@@ -1,5 +1,5 @@
 #include <iostream>
-#include "graph.h"
+#include "../src/graph.h"
 
 int main()
 {
@@ -11,7 +11,6 @@ int main()
     find_path_astar(335032885, 314039002, graph, 100.).to_gpx(335032885, "route2.gpx", graph.get_nodes());
     find_path_astar(1369465901, 5566659612, graph, 100.).to_gpx(1369465901, "route3.gpx", graph.get_nodes());
     find_path_astar(1369465901, 314039002, graph, 100.).to_gpx(1369465901, "route4.gpx", graph.get_nodes());
-    graph.export_nodes("nodes.csv");
 
     return 0;
 }
