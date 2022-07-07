@@ -8,20 +8,10 @@ Graph from_graphml(const std::string& input_file) {
         throw std::runtime_error("Could not load file");
     }
 
-    std::string lon_tag, lat_tag;
-    std::string length_tag;
+    std::string lon_tag, lat_tag, length_tag;
     for (pugi::xml_node &xml_attr: document.child("graphml")) {
         std::string attr_name = xml_attr.attribute("attr.name").value();
         std::string attr_id = xml_attr.attribute("id").value();
-
-/*        for (auto curr_attr = xml_attr.attributes_begin(); curr_attr != xml_attr.attributes_end(); ++curr_attr) {
-            if (strcmp(curr_attr->name(), "attr.name") == 0) {
-                attr_name = curr_attr->value();
-            }
-            if (strcmp(curr_attr->name(), "id") == 0) {
-                attr_id = curr_attr->value();
-            }
-        }*/
         if (attr_name == "x") {
             lon_tag = attr_id;
         } else if (attr_name == "y") {
@@ -29,7 +19,6 @@ Graph from_graphml(const std::string& input_file) {
         } else if (attr_name == "length") {
             length_tag = attr_id;
         }
-
         if (!lat_tag.empty() && !lon_tag.empty()) {
             break;
         }

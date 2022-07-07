@@ -6,7 +6,7 @@
 typedef std::pair<uint64_t, double> Id_value;
 
 static double heuristic(const Node& node1, const Node& node2, double heuristic_multiplier) {
-    return haversine(node1, node2) * heuristic_multiplier;
+    return haversine(node1, node2) * 1000 * heuristic_multiplier;
 }
 
 static Path retrace(uint64_t start, uint64_t goal, std::unordered_map<uint64_t, std::pair<uint64_t, Path>>&& came_from) {
@@ -24,7 +24,7 @@ static Path retrace(uint64_t start, uint64_t goal, std::unordered_map<uint64_t, 
 }
 
 Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double heuristic_multiplier) {
-    auto cmp = [](const Id_value& left, const Id_value& right) { return left.second < right.second; };
+    auto cmp = [](const Id_value& left, const Id_value& right) { return left.second > right.second; };
     std::priority_queue<Id_value, std::vector<Id_value>, decltype(cmp)> frontier(cmp);
     frontier.push({start, 0});
     int goal_cluster = graph.nodes.at(goal).get_cluster_no();
@@ -36,6 +36,7 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
 
     while (!frontier.empty()) {
         uint64_t current = frontier.top().first;
+        frontier.pop();
         if (current == goal) {
             break;
         }

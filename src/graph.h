@@ -14,13 +14,13 @@ typedef std::unordered_map<uint64_t, adj_nodes> adj_list;
 
 class PairHash {
 public: size_t operator()(const std::pair<uint64_t, Path> &p) const {
-        return p.first + PathHash()(p.second);
+        return p.first;
     }
 };
 
 class Graph;
 Graph from_graphml(const std::string&);
-Path find_path_astar(uint64_t start, uint64_t goal, const Graph&, double heuristic_multiplier = 10);
+Path find_path_astar(uint64_t start, uint64_t goal, const Graph&, double heuristic_multiplier = 100);
 
 class Graph {
 private:
