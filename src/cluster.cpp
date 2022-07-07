@@ -1,7 +1,7 @@
 #include "graph.h"
 #include "haversine.h"
 
-#define CLUSTER_MERGE_ITER_COUNT 20
+#define CLUSTER_MERGE_ITER_COUNT 10
 #define MIN_CLUSTER_SIZE_PERCENT 1
 
 class Cluster {
@@ -57,22 +57,33 @@ std::vector<std::unordered_set<uint64_t>> Graph::find_clusters(double threshold)
             cluster_set.push_back(cluster);
         }
         // combine clusters
-        if (it_num % int(1 + this->nodes.size() / CLUSTER_MERGE_ITER_COUNT) == 0) {
-            for (auto& cluster_1: cluster_set) {
-                for (auto& cluster_2: cluster_set) {
-                    if (cluster_1 == cluster_2) {
-                        continue;
+        if (it_num % int(1 + this->nodes.size() / CLUSTER_MERGE_ITER_COUNT) == 0 || it_num == this->nodes.size() - 1) {
+            bool merged = true;
+            while (merged) {
+                merged = false;
+                for (auto &cluster_1: cluster_set) {
+                    for (auto it = cluster_set.begin(); it != cluster_set.end(); it++) {
+                        if (cluster_1 == *it) {
+                            continue;
+                        }
+                        if (cluster_1.distance(*it) <= threshold) {
+                            cluster_1.add_cluster(std::move(*it));
+                            cluster_set.erase(it);
+                            merged = true;
+                            break;
+                        }
                     }
-                    if (cluster_1.distance(cluster_2) <= threshold) {
-                        cluster_1.add_cluster(std::move(cluster_2));
+                    if (merged) {
+                        break;
                     }
                 }
             }
         }
     }
     std::vector<std::unordered_set<uint64_t>> final_clusters{};
+    // add big clusters only
     for (auto& cluster: cluster_set) {
-        if (cluster.node_count() / this->nodes.size() * 100 >= MIN_CLUSTER_SIZE_PERCENT) {
+        if (double(cluster.node_count()) / double(this->nodes.size()) * 100 >= MIN_CLUSTER_SIZE_PERCENT) {
             final_clusters.push_back(cluster.move_nodes());
         }
     }
