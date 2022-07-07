@@ -7,15 +7,50 @@ Graph from_graphml(const std::string& input_file) {
     if (!document.load_file(input_file.c_str())) {
         throw std::runtime_error("Could not load file");
     }
+
+    std::string lon_tag, lat_tag;
+    std::string length_tag;
+    for (pugi::xml_node &xml_attr: document.child("graphml")) {
+        std::string attr_name = xml_attr.attribute("attr.name").value();
+        std::string attr_id = xml_attr.attribute("id").value();
+
+/*        for (auto curr_attr = xml_attr.attributes_begin(); curr_attr != xml_attr.attributes_end(); ++curr_attr) {
+            if (strcmp(curr_attr->name(), "attr.name") == 0) {
+                attr_name = curr_attr->value();
+            }
+            if (strcmp(curr_attr->name(), "id") == 0) {
+                attr_id = curr_attr->value();
+            }
+        }*/
+        if (attr_name == "x") {
+            lon_tag = attr_id;
+        } else if (attr_name == "y") {
+            lat_tag = attr_id;
+        } else if (attr_name == "length") {
+            length_tag = attr_id;
+        }
+
+        if (!lat_tag.empty() && !lon_tag.empty()) {
+            break;
+        }
+    }
+
     Graph graph;
     for (pugi::xml_node &xml_note: document.child("graphml").child("graph")) {
         if (strcmp(xml_note.name(), "node") == 0) {
             double lat = 0, lon = 0;
+            bool lat_written = false, lon_written = false;
             for (pugi::xml_node &data: xml_note) {
-                if (strcmp(data.attributes_begin()->value(), "lat") == 0) {
-                    lat = std::stod(data.text().get());
-                } else {
-                    lon = std::stod(data.text().get());
+                const char *attr_value = data.attribute("key").value();
+                if (strcmp(attr_value, lat_tag.c_str()) == 0) {
+                    lat = data.text().as_double();
+                    lat_written = true;
+                } else if (strcmp(attr_value, lon_tag.c_str()) == 0) {
+                    lon = data.text().as_double();
+                    lon_written = true;
+                }
+                if (lat_written && lon_written) {
+                    break;
                 }
             }
             uint64_t id = xml_note.attribute("id").as_ullong();
@@ -23,7 +58,14 @@ Graph from_graphml(const std::string& input_file) {
         } else {
             uint64_t source = xml_note.attribute("source").as_ullong();
             uint64_t target = xml_note.attribute("target").as_ullong();
-            double weight = std::stod(xml_note.begin()->text().get());
+            double weight = 0;
+            for (pugi::xml_node &data: xml_note) {
+                const char *attr_value = data.attribute("key").value();
+                if (strcmp(attr_value, length_tag.c_str()) == 0) {
+                    weight = data.text().as_double();
+                    break;
+                }
+            }
 
             Path path = Path();
             path.add(target, weight);
