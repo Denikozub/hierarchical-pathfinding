@@ -13,7 +13,7 @@ target_link_libraries(hierarchical_pathfinding pugixml)
 ####### Tests #######
 add_subdirectory(include/doctest)
 add_executable(UnitTests tests/unittests.cpp)
-target_link_libraries(UnitTests doctest)
+target_link_libraries(UnitTests hierarchical_pathfinding doctest)
 add_test(NAME UnitTests COMMAND UnitTests)
 
 add_executable(TestUnclustered tests/test_unclustered.cpp)

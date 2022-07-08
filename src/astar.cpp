@@ -23,7 +23,7 @@ static Path retrace(uint64_t start, uint64_t goal, std::unordered_map<uint64_t, 
     return path;
 }
 
-Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double heuristic_multiplier) {
+Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, bool use_clusters, double heuristic_multiplier) {
     auto cmp = [](const Id_value& left, const Id_value& right) { return left.second > right.second; };
     std::priority_queue<Id_value, std::vector<Id_value>, decltype(cmp)> frontier(cmp);
     frontier.push({start, 0});
@@ -40,7 +40,7 @@ Path find_path_astar(uint64_t start, uint64_t goal, const Graph& graph, double h
         if (current == goal) {
             break;
         }
-        bool use_clusters = goal_cluster == graph.nodes.at(current).get_cluster_no();
+        use_clusters = use_clusters && goal_cluster != graph.nodes.at(current).get_cluster_no();
         for (const auto& [neighbour, path] : *graph.get_neighbours(current, use_clusters)) {
             double new_cost = cost_so_far.at(current) + path.get_weight();
             if (cost_so_far.count(neighbour) == 0 || new_cost < cost_so_far.at(neighbour)) {

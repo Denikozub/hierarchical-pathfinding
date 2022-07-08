@@ -114,19 +114,19 @@ void Graph::clusterize(double threshold) {
                 if (outer_node == neighbour) {
                     continue;
                 }
-                Path path = find_path_astar(outer_node, neighbour, *this);
+                Path path = find_path_astar(outer_node, neighbour, *this, false);
                 if (!path.empty()) {
                     outer_neighbours_map[outer_node].insert({neighbour, path});
                 }
             }
             // add all neighbours not from cluster
-            for (const auto& [neighbour, path] : *get_neighbours(outer_node)) {
+            for (const auto& [neighbour, path] : *get_neighbours(outer_node, false)) {
                 if (this->nodes.at(neighbour).get_cluster_no() != cluster_no) {
                     outer_neighbours_map[outer_node].insert({neighbour, path});
                 }
             }
         }
-        clusters[cluster_no] = outer_neighbours_map;
+        this->clusters[cluster_no] = outer_neighbours_map;
         ++cluster_no;
     }
 }
