@@ -16,6 +16,10 @@ add_executable(UnitTests tests/unittests.cpp)
 target_link_libraries(UnitTests hierarchical_pathfinding doctest)
 add_test(NAME UnitTests COMMAND UnitTests)
 
+add_executable(CompSpeed tests/compare_speed.cpp)
+target_link_libraries(CompSpeed hierarchical_pathfinding)
+add_test(NAME CompSpeed COMMAND CompSpeed)
+
 add_executable(TestUnclustered tests/test_unclustered.cpp)
 target_link_libraries(TestUnclustered hierarchical_pathfinding)
 add_test(NAME TestUnclustered COMMAND TestUnclustered)
