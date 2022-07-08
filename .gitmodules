@@ -1,3 +1,7 @@
-[submodule "src/pugixml"]
-	path = src/pugixml
+
+[submodule "include/pugixml"]
+	path = include/pugixml
 	url = git@github.com:zeux/pugixml.git
+[submodule "include/doctest"]
+	path = include/doctest
+	url = git@github.com:doctest/doctest.git
