@@ -2,8 +2,6 @@
 
 Node::Node(double lat, double lon) : lat(lat), lon(lon) {}
 
-Node::Node(double&& lat, double&& lon) : lat(lat), lon(lon) {}
-
 double Node::get_lat() const {
     return this->lat;
 }
@@ -29,7 +27,7 @@ void Node::set_cluster_no(int new_cluster_no) {
 }
 
 bool Node::has_cluster() const {
-    return this->cluster_no == -1;
+    return this->cluster_no != -1;
 }
 
 void Node::set_outer(bool new_is_outer_) {
