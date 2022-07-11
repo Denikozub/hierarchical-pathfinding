@@ -27,7 +27,8 @@ int main()
         }
     }
     end = std::chrono::steady_clock::now();
-    std::cout << "Unclusterized time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << " ms" << std::endl;
+    std::cout << "Unclusterized time = " <<
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << " ms" << std::endl;
 
     begin = std::chrono::steady_clock::now();
     for (uint64_t start : node_samples) {
@@ -36,7 +37,8 @@ int main()
         }
     }
     end = std::chrono::steady_clock::now();
-    std::cout << "Unclusterized time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << " ms" << std::endl;
+    std::cout << "Clusterized time = " <<
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << " ms" << std::endl;
 
     return 0;
 }
